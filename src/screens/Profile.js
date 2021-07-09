@@ -16,7 +16,7 @@ const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
 
-export default class Home extends React.Component {
+export default class Profile extends React.Component {
 
   _onHomePress = () => {
     Alert.alert(

@@ -16,7 +16,7 @@ const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
 
-export default class Home extends React.Component {
+export default class PostCreate extends React.Component {
 
   _onHomePress = () => {
     Alert.alert(
@@ -46,6 +46,7 @@ export default class Home extends React.Component {
                   Principal
                 </Text>
               </TouchableOpacity>
+
               <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.5)' }]}>
                 <Text style={styles.text}>
                   Perfil
