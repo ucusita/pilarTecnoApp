@@ -6,8 +6,13 @@ import {
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
-  View
+  View,
+  Alert,
 } from 'react-native';
+// import { HomeStackScreen } from './HomeStack';
+// import { ProfileStackScreen } from '../routs/ProfileStack';
+// import { MapStackScreen } from './MapStack';
+import { PostsStackScreen } from '../routs/PostsStack';
 
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
@@ -15,7 +20,7 @@ const width = Dimensions.get('window').width
 
 const Home = ({ navigation }) => {
   const gotoPostCreate = () => {
-    navigation.push("PostCreate")
+    Alert.alert('PostCreate');
   }
 
   return (
@@ -27,7 +32,7 @@ const Home = ({ navigation }) => {
         <View style={{ flexDirection: 'column', height, justifyContent: 'center' }}>
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity
-              onPress={() => gotoPostCreate()}
+              onPress={Alert.alert('Home')}              
               style={[styles.button, { backgroundColor: 'rgba(60, 179, 113, 0.5)' }]}
             >
               <Text style={styles.text}>
@@ -35,7 +40,7 @@ const Home = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.5)' }]}
-              onPress={() => gotoPostCreate()}>
+              onPress={Alert.alert('Profile')}>
               <Text style={styles.text}>
                 Perfil
               </Text>
@@ -51,7 +56,7 @@ const Home = ({ navigation }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(0, 165, 188, 0.8)' }]}
-              onPress={() => gotoPostCreate()}>
+              onPress={Alert.alert('Mapa')}>
               <Text style={styles.text}>
                 Mapa
               </Text>
