@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   Dimensions,
-  StatusBar,
   StyleSheet,
-  Text,
   ImageBackground,
-  TouchableOpacity,
   View,
-  Alert
+  Text,
 } from 'react-native';
 
 const height = Dimensions.get('window').height
@@ -17,58 +13,18 @@ const width = Dimensions.get('window').width
 
 
 export default class Post extends React.Component {
-
-  _onHomePress = () => {
-    Alert.alert(
-      "Hola",
-      "Ya te encuentras ahí",
-      [
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
-  }
-
-
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <ImageBackground
           style={{ height }}
-          source={require('../assets/images/fondo.png')}
+          source={require('../assets/images/backgroundPost.jpg')}
         >
-          <View style={{ flexDirection: 'column', height, justifyContent: 'center' }}>
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                onPress={() => this._onHomePress()}
-                style={[styles.button, { backgroundColor: 'rgba(60, 179, 113, 0.5)' }]}
-              >
-                <Text style={styles.text}>
-                  Principal
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.5)' }]}>
-                <Text style={styles.text}>
-                  Perfil
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={{ flexDirection: 'row', }}>
-              <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(255, 165, 0, 0.5)' }]}>
-                <Text style={styles.text}>
-                  Posteos
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(0, 165, 188, 0.8)' }]}>
-                <Text style={styles.text}>
-                  Mapa
-                </Text>
-              </TouchableOpacity>
-            </View>
+          <View style={styles.base}>
+            <Text style={styles.text}>
+              Seccion Posts
+            </Text>
           </View>
-
         </ImageBackground>
       </SafeAreaView>
     )

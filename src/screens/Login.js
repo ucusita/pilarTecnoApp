@@ -1,94 +1,99 @@
-import React, { Component } from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  Dimensions,
-  StatusBar,
-  StyleSheet,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  View,
-  Alert
-} from 'react-native';
+import React, { Component } from 'react'
+import { Text, StyleSheet, Alert, Image } from 'react-native';
+import LoginForm from '../components/LoginForm'
+//import axios from 'axios'
+import LinearGradient from 'react-native-linear-gradient'
+//import { baseURL } from '../baseUrl'
+//axios.defaults.baseURL = baseURL
 
-const height = Dimensions.get('window').height
-const width = Dimensions.get('window').width
+export default class Login extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            email: '',
+            password: '',
+            errorMessage: ''
+        }
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSignIn = this.handleSignIn.bind(this)
+        this.handleSignUp = this.handleSignUp.bind(this)
+    }
 
+    handleChange(name, value) {
+        this.setState({
+            [name]: value
+        })
+    }
 
-export default class Login extends React.Component {
+    async handleSignUp() {
+        console.log('SignUpForm')
+        this.props.handleChange('createAccount', true)
+    }
 
-  _onHomePress = () => {
-    Alert.alert(
-      "Hola",
-      "Ya te encuentras ahí",
-      [
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
-  }
+    async handleSignIn() {
+        // try {
+        //     const { email, password } = this.state
+        //     const result = await axios.post('/auth/login', { email, password })
+        //     if (result.data.token) {
+        //         this.props.handleChange('token', result.data.token)
+        //     } else {
+        //         Alert.alert('', result.data)
+                    Alert.alert('Está logueado correctamente');
+        //     }
 
+        // } catch (error) {
+        //     console.log(error)
+        // }
+    }
 
-  render() {
-    return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <ImageBackground
-          style={{ height }}
-          source={require('../assets/images/fondo.png')}
-        >
-          <View style={{ flexDirection: 'column', height, justifyContent: 'center' }}>
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                onPress={() => this._onHomePress()}
-                style={[styles.button, { backgroundColor: 'rgba(60, 179, 113, 0.5)' }]}
-              >
-                <Text style={styles.text}>
-                  Principal
-                </Text>
-              </TouchableOpacity>
+    render() {
+        return (
+            <LinearGradient
+                colors={['#4D54DF', '#9C55BB']}
+                style={styles.container}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+            >
+                <Text style={styles.headerText}>Mod V </Text>
+                <LoginForm
+                    email={this.state.email}
+                    password={this.state.password}
+                    handleChange={this.handleChange}
+                    handleSignIn={this.handleSignIn}
+                    handleSignUp={this.handleSignUp}
+                />
+                <Text>{this.state.errorMessage}</Text>
+                <Image
+                    source={require('../images/wetaxi.png')}
+                    style={styles.logo}
+                />
 
-              <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.5)' }]}>
-                <Text style={styles.text}>
-                  Perfil
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={{ flexDirection: 'row', }}>
-              <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(255, 165, 0, 0.5)' }]}>
-                <Text style={styles.text}>
-                  Posteos
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(0, 165, 188, 0.8)' }]}>
-                <Text style={styles.text}>
-                  Mapa
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-        </ImageBackground>
-      </SafeAreaView>
-    )
-  }
+            </LinearGradient>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center'
-  },
-  button: {
-    margin: width / 20,
-    height: width / 2.5,
-    width: width / 2.5,
-    borderRadius: 15,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    zIndex: 1
-  }
-})
+    container: {
+        flex: 1,
+    },
+    headerText: {
+        fontSize: 64,
+        color: '#FFF',
+        textAlign: 'center',
+        marginTop: 180,
+        marginBottom: 40
+    },
+    errorMessage: {
+        marginHorizontal: 10,
+        fontSize: 18,
+        color: '#fff'
+    },
+    logo: {
+        //flex: 1,
+        marginTop: 100,
+        height: 100,
+        width: 100,
+        alignSelf: 'center',
+    }
+});

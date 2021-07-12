@@ -1,24 +1,13 @@
-import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  Dimensions,
-  StatusBar,
-  StyleSheet,
-  Text,
-  ImageBackground,
-  useColorScheme,
-  View,
-} from 'react-native';
-import AppStack from '../routs/app';
+import React from 'react';
+import { Dimensions, StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import AppStack from '../routs/appStack';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 const App = props => {
   return (
-    // <Home />
     <NavigationContainer>
       <AppStack />
     </NavigationContainer>
