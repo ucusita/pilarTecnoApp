@@ -9,8 +9,8 @@ import {
   View,
   Alert,
 } from 'react-native';
-// import { HomeStackScreen } from './HomeStack';
-// import { ProfileStackScreen } from '../routs/ProfileStack';
+//import { HomeStackScreen } from './HomeStack';
+import { ProfileStackScreen } from '../routs/ProfileStack';
 // import { MapStackScreen } from './MapStack';
 import { PostsStackScreen } from '../routs/PostsStack';
 
@@ -40,7 +40,7 @@ const Home = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.5)' }]}
-              onPress={Alert.alert('Profile')}>
+              onPress={() => this.props.navigation.navigate("Profile") }>
               <Text style={styles.text}>
                 Perfil
               </Text>
@@ -56,7 +56,8 @@ const Home = ({ navigation }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(0, 165, 188, 0.8)' }]}
-              onPress={Alert.alert('Mapa')}>
+              onPress={() => this.props.navigation.navigate("Profile") }
+              >
               <Text style={styles.text}>
                 Mapa
               </Text>

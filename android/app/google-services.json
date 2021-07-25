@@ -1,0 +1,135 @@
+{
+  "project_info": {
+    "project_number": "577525055621",
+    "firebase_url": "https://uyprontoayuda.firebaseio.com",
+    "project_id": "uyprontoayuda",
+    "storage_bucket": "uyprontoayuda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577525055621:android:0ef3bf141ce1d7e38529ec",
+        "android_client_info": {
+          "package_name": "com.infotronica.appialcance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "577525055621-v4u476oigev41g3lqfdj6m35rjpqkm4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7v17wx5Hd8vNHhcFOUG-v7KCE0ivkNIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577525055621-v4u476oigev41g3lqfdj6m35rjpqkm4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577525055621:android:1654449a9de4836c8529ec",
+        "android_client_info": {
+          "package_name": "com.infotronica.apppilar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "577525055621-sjd57lauhus33a59kmfe2osugn99vlco.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infotronica.apppilar",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "577525055621-v4u476oigev41g3lqfdj6m35rjpqkm4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7v17wx5Hd8vNHhcFOUG-v7KCE0ivkNIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577525055621-v4u476oigev41g3lqfdj6m35rjpqkm4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577525055621:android:d53148b6f40c338e",
+        "android_client_info": {
+          "package_name": "com.infotronica.prontoworks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "577525055621-v4u476oigev41g3lqfdj6m35rjpqkm4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7v17wx5Hd8vNHhcFOUG-v7KCE0ivkNIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577525055621-v4u476oigev41g3lqfdj6m35rjpqkm4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577525055621:android:ecb5ef2c3a6b6fc6",
+        "android_client_info": {
+          "package_name": "com.infotronica.uyprontoayuda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "577525055621-v4u476oigev41g3lqfdj6m35rjpqkm4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7v17wx5Hd8vNHhcFOUG-v7KCE0ivkNIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577525055621-v4u476oigev41g3lqfdj6m35rjpqkm4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

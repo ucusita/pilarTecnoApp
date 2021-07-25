@@ -1,13 +1,23 @@
 import React from 'react';
-import { Dimensions, StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AppStack from '../routs/appStack';
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import reducers from "../store/reducers";
+
+const store = createStore(
+  reducers,
+  //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
 
 const App = props => {
   return (
-    <NavigationContainer>
-      <AppStack />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <AppStack />
+      </NavigationContainer>
+    </Provider>
   );
 };
 

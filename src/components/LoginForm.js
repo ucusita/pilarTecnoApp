@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, View, TextInput, TouchableOpacity, Alert } from 'react-native'
+import SocialButton from '../components/SocialButtons';
 export default class LoginForm extends Component {
+
     render() {
         return (
-            <View>
+            <View style={styles.view}>
                 <TextInput
                     style={styles.input}
                     placeholder='su@email.com'
@@ -34,14 +36,42 @@ export default class LoginForm extends Component {
                     style={styles.create}
                     onPress={this.props.handleSignUp}
                 >
-                    <Text style={styles.create}>Crear cuenta</Text>
+                    <Text style={styles.create}>Crear cuenta</Text>                    
                 </TouchableOpacity>
+                <SocialButton
+                    buttonTitle="Sign In with Facebook"
+                    btnType="facebook"
+                    color="#4867aa"
+                    backgroundColor="#e6eaf4"
+                    //onPress={this.props.handleSignInWithFacebook}
+                    onPress={() => {Alert.alert("Facebook") }}
+                />
+                <SocialButton
+                    buttonTitle="Sign In with Google"
+                    btnType="google"
+                    color="#de4d41"
+                    backgroundColor="#f5e7ea"
+                    onPress={ this.props.handleSignInWithGoogle }
+                    //onPress={this.props.handleSignInWithGoogle}
+                />
+                <SocialButton
+                    buttonTitle="Sign In Annonymous"
+                    btnType="user"
+                    color="#1e4d41"
+                    backgroundColor="#d5e7ea"
+                    //onPress={ () => {Alert.alert("Annonymous") }}
+                    onPress={ this.props.handleSignAnonymousGoogle }
+                    //onPress={}
+                />
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    view: {
+        textAlign: 'center',
+    },
     input: {
         height: 40,
         padding: 5,
@@ -66,14 +96,15 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         fontSize: 25,
-        fontFamily: Platform.OS === 'android' ? 'sans-serif-light' : undefined,
+        //fontFamily: Platform.OS === 'android' ? 'sans-serif-light' : undefined,
         fontWeight: '200',
     },
     create: {
         color: '#fff',
         textAlign: 'center',
         fontSize: 25,
-        fontFamily: Platform.OS === 'android' ? 'sans-serif-light' : undefined,
+        marginBottom: 20,
+        //fontFamily: Platform.OS === 'android' ? 'sans-serif-light' : undefined,
         fontWeight: '200',
     }
 })

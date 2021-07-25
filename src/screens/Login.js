@@ -1,10 +1,21 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, Alert, Image } from 'react-native';
-import LoginForm from '../components/LoginForm'
-//import axios from 'axios'
+import LoginForm from '../components/LoginForm';
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-community/google-signin';
 import LinearGradient from 'react-native-linear-gradient'
-//import { baseURL } from '../baseUrl'
-//axios.defaults.baseURL = baseURL
+
+GoogleSignin.hasPlayServices({ autoResolve: true, showPlayServicesUpdateDialog: true }).then(() => {
+    console.log('play services are available. can now configure library');
+})
+.catch((err) => {
+      console.log("Play services error", err.code, err.message);
+})
+
+GoogleSignin.configure({
+    //scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+    webClientId: '577525055621-v4u476oigev41g3lqfdj6m35rjpqkm4h.apps.googleusercontent.com',
+});
 
 export default class Login extends Component {
     constructor(props) {
@@ -17,6 +28,9 @@ export default class Login extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleSignIn = this.handleSignIn.bind(this)
         this.handleSignUp = this.handleSignUp.bind(this)
+        this.onGoogleButtonPress = this.onGoogleButtonPress.bind(this)
+        this.handleSignInWithGoogle = this.handleSignInWithGoogle.bind(this)
+        this.handleSignAnonymousGoogle = this.handleSignAnonymousGoogle.bind(this)
     }
 
     handleChange(name, value) {
@@ -27,26 +41,97 @@ export default class Login extends Component {
 
     async handleSignUp() {
         console.log('SignUpForm')
-        this.props.handleChange('createAccount', true)
+        try {
+            const { email, password } = this.state
+            await auth()
+                .createUserWithEmailAndPassword(email, password)
+                .then(() => {
+                    console.log('User account created and signed in!');
+                })
+                .catch(error => {
+                    if (error.code === 'auth/email-already-in-use') {
+                        alert('That email address is already in use!');
+                    }
+
+                    if (error.code === 'auth/invalid-email') {
+                        alert('That email address is invalid!');
+                    }
+
+                    console.error(error);
+                });
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async handleSignIn() {
-        // try {
-        //     const { email, password } = this.state
-        //     const result = await axios.post('/auth/login', { email, password })
-        //     if (result.data.token) {
-        //         this.props.handleChange('token', result.data.token)
-        //     } else {
-        //         Alert.alert('', result.data)
-                    Alert.alert('Está logueado correctamente');
-        //     }
+        console.log("Intentando acceder por email y password");
+        try {
+            const { email, password } = this.state
+            await auth()
+                .signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    console.log('User account signed in!');
+                })
+                .catch(error => {
+                    if (error.code === 'auth/email-already-in-use') {
+                        alert('That email address is already in use!');
+                    }
 
-        // } catch (error) {
-        //     console.log(error)
-        // }
+                    if (error.code === 'auth/invalid-email') {
+                        alert('That email address is invalid!');
+                    }
+
+                    console.error(error);
+                });
+
+            // if (result.data.token) {
+            //     this.props.handleChange('token', result.data.token)
+            // } else {
+            //     Alert.alert('', result.data)
+            // }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async handleSignInWithGoogle() {
+        console.log("Intentando acceder con Google");
+        
+        await this.onGoogleButtonPress().then(() => console.log('Signed in with Google!'))
+
+    }
+
+    async onGoogleButtonPress() {
+        // Get the users ID token
+        const { idToken } = await GoogleSignin.signIn();
+        console.log(idToken);
+        // Create a Google credential with the token
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      
+        // Sign-in the user with the credential
+        return auth().signInWithCredential(googleCredential);
+      }
+
+    async handleSignAnonymousGoogle() {
+        console.log("Intentando acceder anónimamente");
+        await auth()
+            .signInAnonymously()
+            .then(() => {
+                console.log('User signed in anonymously');
+            })
+            .catch(error => {
+                if (error.code === 'auth/operation-not-allowed') {
+                    console.log('Enable anonymous in your firebase console.');
+                }
+
+                console.error(error);
+            });
     }
 
     render() {
+        console.log('Login screen');
         return (
             <LinearGradient
                 colors={['#4D54DF', '#9C55BB']}
@@ -61,6 +146,8 @@ export default class Login extends Component {
                     handleChange={this.handleChange}
                     handleSignIn={this.handleSignIn}
                     handleSignUp={this.handleSignUp}
+                    handleSignInWithGoogle={this.handleSignInWithGoogle}
+                    handleSignAnonymousGoogle={this.handleSignAnonymousGoogle}
                 />
                 <Text>{this.state.errorMessage}</Text>
                 <Image
@@ -78,11 +165,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     headerText: {
-        fontSize: 64,
+        fontSize: 44,
         color: '#FFF',
         textAlign: 'center',
-        marginTop: 180,
-        marginBottom: 40
+        marginTop: 40,
+        marginBottom: 30
     },
     errorMessage: {
         marginHorizontal: 10,
