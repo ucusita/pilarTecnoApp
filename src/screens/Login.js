@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import {
     StyleSheet,
-    View,
-    StatusBar,
-    ImageBackground,
     Text,
     Image,
-    TextInput,
-    TouchableOpacity
 } from "react-native";
 import LoginForm from '../components/LoginForm';
 import LinearGradient from 'react-native-linear-gradient';
@@ -54,28 +49,29 @@ class Login extends React.Component {
     }
 
     async handleSignUp() {
-        console.log('SignUpForm')
-        try {
-            const { email, password } = this.state
-            await auth()
-                .createUserWithEmailAndPassword(email, password)
-                .then(() => {
-                    console.log('User account created and signed in!');
-                })
-                .catch(error => {
-                    if (error.code === 'auth/email-already-in-use') {
-                        alert('That email address is already in use!');
-                    }
+        console.log('SignUpForm');
+        this.props.navigation.navigate('Create');
+        // try {
+        //     const { email, password } = this.state
+        //     await auth()
+        //         .createUserWithEmailAndPassword(email, password)
+        //         .then(() => {
+        //             console.log('User account created and signed in!');
+        //         })
+        //         .catch(error => {
+        //             if (error.code === 'auth/email-already-in-use') {
+        //                 alert('That email address is already in use!');
+        //             }
 
-                    if (error.code === 'auth/invalid-email') {
-                        alert('That email address is invalid!');
-                    }
+        //             if (error.code === 'auth/invalid-email') {
+        //                 alert('That email address is invalid!');
+        //             }
 
-                    console.error(error);
-                });
-        } catch (error) {
-            console.log(error)
-        }
+        //             console.error(error);
+        //         });
+        // } catch (error) {
+        //     console.log(error)
+        // }
     }
 
     async handleSignIn() {
@@ -84,8 +80,9 @@ class Login extends React.Component {
             const { email, password } = this.state
             await auth()
                 .signInWithEmailAndPassword(email, password)
-                .then(() => {
+                .then((data) => {
                     console.log('User account signed in!');
+                    this.props.setUser(data.user);
                 })
                 .catch(error => {
                     if (error.code === 'auth/email-already-in-use') {
@@ -98,12 +95,6 @@ class Login extends React.Component {
 
                     console.error(error);
                 });
-
-            // if (result.data.token) {
-            //     this.props.handleChange('token', result.data.token)
-            // } else {
-            //     Alert.alert('', result.data)
-            // }
 
         } catch (error) {
             console.log(error)
@@ -113,7 +104,11 @@ class Login extends React.Component {
     async handleSignInWithGoogle() {
         console.log("Intentando acceder con Google");
         
-        await this.onGoogleButtonPress().then(() => console.log('Signed in with Google!'))
+        await this.onGoogleButtonPress().then((data) => {
+            console.log('Signed in with Google!');
+            this.props.setUser(data.user);
+        }
+        )
 
     }
 
@@ -132,8 +127,9 @@ class Login extends React.Component {
         console.log("Intentando acceder anónimamente");
         await auth()
             .signInAnonymously()
-            .then(() => {
+            .then((data) => {
                 console.log('User signed in anonymously');
+                this.props.setUser(data.user);
             })
             .catch(error => {
                 if (error.code === 'auth/operation-not-allowed') {

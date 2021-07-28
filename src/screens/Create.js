@@ -42,9 +42,9 @@ class Create extends React.Component {
                     source={image}
                     style={styles.image}
                 >
-                    <Text style={styles.text}>Create your account</Text>
+                    <Text style={styles.text}>Crea tu cuenta</Text>
                     <Input style={styles.input}
-                        placeholder='Your username or Email'
+                        placeholder='Usuario o Email'
                         leftIcon={<Icon
                             name='user'
                             size={30}
@@ -54,7 +54,7 @@ class Create extends React.Component {
                         onChangeText={em => this.setState({ email: em })}
                     />
                     <Input style={styles.input}
-                        placeholder="Enter your password"
+                        placeholder="Password"
                         secureTextEntry={true}
                         leftIcon={<Icon
                             name='user'
@@ -68,18 +68,16 @@ class Create extends React.Component {
                             auth().createUserWithEmailAndPassword(email, password)
                                 .then(() => {
                                     console.log('User account created');
-                                    Alert.alert('User account created!')
+                                    Alert.alert('Cuenta creada!')
                                     this.props.navigation.navigate('Login');
                                 })
                                 .catch(error => {
                                     if (error.code === 'auth/email-already-in-use') {
-                                    /* console.log('That email address is already in use!'); */
-                                    Alert.alert('That email address is already in use!');
+                                    Alert.alert('Email existente!');
                                     }
             
                                     if (error.code === 'auth/invalid-email') {
-                                    /* console.log('That email address is invalid!'); */
-                                    Alert.alert('That email address is invalid!');
+                                    Alert.alert('Email inválido!');
                                     }
                                     console.error(error);
                                 });

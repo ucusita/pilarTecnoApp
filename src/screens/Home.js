@@ -9,21 +9,19 @@ import {
   View,
   Alert,
 } from 'react-native';
-//import { HomeStackScreen } from './HomeStack';
-import { ProfileStackScreen } from '../routs/ProfileStack';
-// import { MapStackScreen } from './MapStack';
-import { PostsStackScreen } from '../routs/PostsStack';
 
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
 
-const Home = ({ navigation }) => {
-  const gotoPostCreate = () => {
-    Alert.alert('PostCreate');
-  }
+export default class Home extends React.Component {
+  constructor(props) {
+    super(props);
+  } 
 
-  return (
+  render(){
+    return( 
+
     <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
         style={{ height }}
@@ -40,7 +38,7 @@ const Home = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.5)' }]}
-              onPress={() => this.props.navigation.navigate("Profile") }>
+              onPress={()=> this.props.navigation.navigate('Profile')}>
               <Text style={styles.text}>
                 Perfil
               </Text>
@@ -49,14 +47,14 @@ const Home = ({ navigation }) => {
 
           <View style={{ flexDirection: 'row', }}>
             <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(255, 165, 0, 0.5)' }]}
-              onPress={() => gotoPostCreate()}>
+              onPress={()=> this.props.navigation.navigate('Posts')} >
               <Text style={styles.text}>
                 Posteos
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.button, { backgroundColor: 'rgba(0, 165, 188, 0.8)' }]}
-              onPress={() => this.props.navigation.navigate("Profile") }
+              onPress={() => this.props.navigation.navigate('Map') }
               >
               <Text style={styles.text}>
                 Mapa
@@ -67,8 +65,8 @@ const Home = ({ navigation }) => {
 
       </ImageBackground>
     </SafeAreaView>
-  )
-}
+    )}
+  }
 
 const styles = StyleSheet.create({
   text: {
@@ -88,4 +86,3 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Home;
