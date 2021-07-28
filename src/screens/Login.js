@@ -5,10 +5,12 @@ import {
     StatusBar,
     ImageBackground,
     Text,
+    Image,
     TextInput,
     TouchableOpacity
 } from "react-native";
-import SocialButton from '../components/SocialButtons';
+import LoginForm from '../components/LoginForm';
+import LinearGradient from 'react-native-linear-gradient';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
@@ -141,8 +143,7 @@ class Login extends React.Component {
             });
     }
 
-    render() {
-        console.log('Login screen');
+    render() {        
         return (
             <LinearGradient
                 colors={['#4D54DF', '#9C55BB']}
