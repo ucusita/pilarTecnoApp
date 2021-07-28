@@ -7,9 +7,11 @@ import {
   View,
 } from 'react-native';
 import { Image, Icon } from 'react-native-elements';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, {  PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { hasLocationPermission } from '../components/LocationPermission';
+import cars from "../../assets/data/cars" 
+
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 const ASPECT_RATIO = width / height;
@@ -35,12 +37,25 @@ export default class Map extends React.Component {
     })
   }
 
-  async componentWillMount() {
-    await requestLocationPermission()
+  getImageUrl = (type) => {
+    if (type === "UberX") {
+        return require("../assets/cars/top-UberX.png");
+    } else if (type === "Comfort") {
+        return require("../assets/cars/top-Comfort.png");
+    } else if (type === "UberXL") {
+        return require("../assets/cars/top-UberXL.png");
+    }
+    return require("../assets/cars/UberX.jpeg");
   }
 
-  componentDidMount = () => {
-    this._getLocation()
+  // async componentWillMount() {
+  //   await hasLocationPermission()
+  // }
+
+  componentDidMount = async () => {
+    await hasLocationPermission().then(() => {
+      this._getLocation();
+    })
   }
   _getLocation = async () => {
     await Geolocation.getCurrentPosition(
@@ -86,16 +101,38 @@ export default class Map extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <MapView
+
+        {/* <MapView
           ref={map => {
             this.mapRef = map;
           }}
           mapType='standard'
           style={styles.map}
           initialRegion={this.state.region}
-          // region={this.state.region}
           onRegionChangeComplete={this.onRegionChange}
-        />
+        /> */}
+
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+          showsUserLocation
+          initialRegion={{
+            latitude: 28.450627,
+            longitude: -16.263045,
+            latitudeDelta: 0.0222,
+            longitudeDelta: 0.0121,
+          }}
+        >
+          {cars.map((car) => (
+            <Marker
+              key={car.id}
+              coordinate={{ latitude: car.latitude, longitude: car.longitude }}
+            >
+              <Image style={[styles.marker, { transform: [{ rotate: `${car.heading}deg` }] }]} source={this.getImageUrl(car.type)} />
+            </Marker>
+          ))}
+        </MapView>
+
         <View style={{
           position: 'absolute', flexDirection: 'row',
           backgroundColor: 'white', borderRadius: 100, width: width / 10, alignSelf: 'flex-end',
