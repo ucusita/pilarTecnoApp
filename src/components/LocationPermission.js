@@ -1,4 +1,5 @@
-import PermissionsAndroid from 'react-native';
+import {Platform} from 'react-native';
+import { PermissionsAndroid } from 'react-native';
 
 export const hasLocationPermission = async () => {
     if (Platform.OS === 'ios') {

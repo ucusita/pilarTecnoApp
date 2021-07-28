@@ -30,7 +30,7 @@ export default class Home extends React.Component {
         <View style={{ flexDirection: 'column', height, justifyContent: 'center' }}>
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity
-              onPress={Alert.alert('Home')}              
+              onPress={()=> this.props.navigation.navigate('Home')}
               style={[styles.button, { backgroundColor: 'rgba(60, 179, 113, 0.5)' }]}
             >
               <Text style={styles.text}>

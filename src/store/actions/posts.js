@@ -55,7 +55,7 @@ export const delPost = (data) => (dispatch) => {
         })
         .catch((error) => console.log(error))
 }
-export const updatePosts = (data) => (dispatch) => {
+export const updatePost = (data) => (dispatch) => {
 
     return putPost(data)
         .then(([response, json]) => {

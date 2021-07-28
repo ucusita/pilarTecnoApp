@@ -5,24 +5,27 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import { Image, Icon } from 'react-native-elements';
-import MapView, {  PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { hasLocationPermission } from '../components/LocationPermission';
-import cars from "../../assets/data/cars" 
 
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 const ASPECT_RATIO = width / height;
-const LATITUDE = -33.3018708;
-const LONGITUDE = -66.3298548;
+const LATITUDE = -29.4134836;
+const LONGITUDE = -66.8788222;
 const LATITUDE_DELTA = 0.00422;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 export default class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      location: null,
+      mapType: 'standard',
+      iconMapType: 'paperclip',
       region: {
         latitude: LATITUDE,
         longitude: LONGITUDE,
@@ -36,21 +39,6 @@ export default class Map extends React.Component {
       region
     })
   }
-
-  getImageUrl = (type) => {
-    if (type === "UberX") {
-        return require("../assets/cars/top-UberX.png");
-    } else if (type === "Comfort") {
-        return require("../assets/cars/top-Comfort.png");
-    } else if (type === "UberXL") {
-        return require("../assets/cars/top-UberXL.png");
-    }
-    return require("../assets/cars/UberX.jpeg");
-  }
-
-  // async componentWillMount() {
-  //   await hasLocationPermission()
-  // }
 
   componentDidMount = async () => {
     await hasLocationPermission().then(() => {
@@ -94,44 +82,36 @@ export default class Map extends React.Component {
       }
     )
   }
+  
   async fitCoordinates() {
     console.log('centrando mapa')
     this._getLocation()
   }
+
+  switchMapType = () => {
+    console.log('changing');
+    this.setState({ mapType: this.state.mapType === 'satellite' ? 'standard' : 'satellite' });
+    this.setState({ iconMapType: this.state.iconMapType === 'fighter-jet' ? 'paperclip' : 'fighter-jet' });
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
-
-        {/* <MapView
-          ref={map => {
-            this.mapRef = map;
-          }}
-          mapType='standard'
+        <MapView
+          ref={map => { this.mapRef = map; }}
+          zoomEnabled={true}
+          maxZoomLevel={15}
+          rotateEnabled={false}
+          scrollEnabled={true}
+          pitchEnabled={false}
+          toolbarEnabled={false}
+          provider="google"
+          //mapType='standard'
+          mapType={this.state.mapType}
           style={styles.map}
           initialRegion={this.state.region}
           onRegionChangeComplete={this.onRegionChange}
-        /> */}
-
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          style={styles.map}
-          showsUserLocation
-          initialRegion={{
-            latitude: 28.450627,
-            longitude: -16.263045,
-            latitudeDelta: 0.0222,
-            longitudeDelta: 0.0121,
-          }}
-        >
-          {cars.map((car) => (
-            <Marker
-              key={car.id}
-              coordinate={{ latitude: car.latitude, longitude: car.longitude }}
-            >
-              <Image style={[styles.marker, { transform: [{ rotate: `${car.heading}deg` }] }]} source={this.getImageUrl(car.type)} />
-            </Marker>
-          ))}
-        </MapView>
+        />
 
         <View style={{
           position: 'absolute', flexDirection: 'row',
@@ -146,8 +126,21 @@ export default class Map extends React.Component {
             onPress={() => this.fitCoordinates()}
           />
         </View>
+        <View style={{
+          position: 'absolute', flexDirection: 'row',
+          backgroundColor: 'white', borderRadius: 100, width: width / 10, alignSelf: 'flex-end',
+          margin: 80, marginRight: 20, alignItems: 'center', justifyContent: 'center'
+        }}>
+          <Icon
+            name={this.state.iconMapType}
+            type="font-awesome"
+            color='#8d2d84'
+            size={width / 10}
+            onPress={() => this.switchMapType()}
+          />
+        </View>
         <View style={styles.markerFixed}>
-          <Image style={styles.marker} source={require('../assets/images/pin.png')}
+          <Image style={styles.marker} source={require('../assets/images/pin2.png')}
           />
         </View>
         <SafeAreaView style={styles.footer}>
@@ -163,7 +156,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 30,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   content: {
     margin: width / 20,
@@ -200,5 +193,21 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     margin: 20,
     alignSelf: 'center'
-  }
+  },
+  // container: {
+  //   position: 'absolute',
+  //   top: 0,
+  //   left: 0,
+  //   right: 0,
+  //   bottom: 0,
+  //   justifyContent: 'flex-end',
+  //   alignItems: 'center'
+  // },
+  // map: {
+  //   position: 'absolute',
+  //   top: 0,
+  //   left: 0,
+  //   right: 0,
+  //   bottom: 0
+  // }
 })
