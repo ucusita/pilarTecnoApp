@@ -11,6 +11,9 @@ import {
 import EvilIconsIcon from "react-native-vector-icons/EvilIcons";
 import SocialButton from '../components/SocialButtons';
 import { GoogleSignin } from '@react-native-community/google-signin';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
+import { connect } from 'react-redux';
+import { actions } from '../store';
 
 
 GoogleSignin.hasPlayServices({ autoResolve: true, showPlayServicesUpdateDialog: true }).then(() => {
@@ -26,11 +29,21 @@ GoogleSignin.configure({
 });
 
 
-function Login(props) {
+class Login extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            photoURL: '',
+            name: '',
+            password: '',
+        };
+    }
 
     //const {email, photoURL, name, password} = this.state;
 
-    const handleSignUp = async () => {
+    handleSignUp = async () => {
         console.log('SignUpForm');
         try {
             const { email, password } = this.state
@@ -53,9 +66,9 @@ function Login(props) {
         } catch (error) {
             console.log(error)
         }
-    };
+    }
 
-    const handleSignIn = async () => {
+    handleSignIn = async () => {
         console.log("Intentando acceder por email y password");
         try {
             const { email, password } = this.state
@@ -87,14 +100,14 @@ function Login(props) {
         }
     }
 
-    const handleSignInWithGoogle = async () => {
+    handleSignInWithGoogle = async () => {
         console.log("Intentando acceder con Google");
 
         await this.onGoogleButtonPress().then(() => console.log('Signed in with Google!'))
 
     }
 
-    const onGoogleButtonPress = async () => {
+    onGoogleButtonPress = async () => {
         // Get the users ID token
         const { idToken } = await GoogleSignin.signIn();
         console.log(idToken);
@@ -105,7 +118,7 @@ function Login(props) {
         return auth().signInWithCredential(googleCredential);
     }
 
-    const handleSignAnonymousGoogle = async () => {
+    handleSignAnonymousGoogle = async () => {
         console.log("Intentando acceder anónimamente");
         await auth()
             .signInAnonymously()
@@ -121,94 +134,107 @@ function Login(props) {
             });
     }
 
-
-    return (
-        <View style={styles.root}>
-            <StatusBar barStyle="light-content" backgroundColor="rgba(0,0,0,0)" />
-            <View style={styles.background}>
-                <ImageBackground
-                    style={styles.rect}
-                    imageStyle={styles.rect_imageStyle}
-                    source={require('../assets/images/fondo1.jpg')}
-                >
-                    <View style={styles.logoColumn}>
-                        <View style={styles.logo}>
-                            <View style={styles.endWrapperFiller}></View>
-                            <View style={styles.text3Column}>
-                                <Text style={styles.text3}>MFR</Text>
-                                <View style={styles.rect7}></View>
+    render() {
+        const { email, photoURL, name, loading, password } = this.state;
+        return (
+            <View style={styles.root}>
+                <StatusBar barStyle="light-content" backgroundColor="rgba(0,0,0,0)" />
+                <View style={styles.background}>
+                    <ImageBackground
+                        style={styles.rect}
+                        imageStyle={styles.rect_imageStyle}
+                        source={require('../assets/images/fondo1.jpg')}
+                    >
+                        <View style={styles.logoColumn}>
+                            <View style={styles.logo}>
+                                <View style={styles.endWrapperFiller}></View>
+                                <View style={styles.text3Column}>
+                                    <Text style={styles.text3}>MFR</Text>
+                                    <View style={styles.rect7}></View>
+                                </View>
+                            </View>
+                            <View style={styles.form}>
+                                <View style={styles.usernameColumn}>
+                                    <View style={styles.username}>
+                                        <EvilIconsIcon
+                                            name="user"
+                                            style={styles.icon22}
+                                        ></EvilIconsIcon>
+                                        <TextInput
+                                            placeholder="Username"
+                                            placeholderTextColor="rgba(255,255,255,1)"
+                                            secureTextEntry={false}
+                                            style={styles.usernameInput}
+                                            onChangeText={ema => this.setState({ email: ema })}
+                                        ></TextInput>
+                                    </View>
+                                    <View style={styles.password}>
+                                        <EvilIconsIcon
+                                            name="lock"
+                                            style={styles.icon2}
+                                        ></EvilIconsIcon>
+                                        <TextInput
+                                            placeholder="Password"
+                                            placeholderTextColor="rgba(255,255,255,1)"
+                                            secureTextEntry={false}
+                                            style={styles.passwordInput}
+                                        ></TextInput>
+                                    </View>
+                                </View>
+                                <View style={styles.usernameColumnFiller}></View>
+                                <TouchableOpacity
+                                    onPress={() => props.navigation.navigate("Channels")}
+                                    style={styles.button}
+                                >
+                                    <Text style={styles.text2}>Ingresar</Text>
+                                </TouchableOpacity>
+                                <SocialButton
+                                    buttonTitle="Sign In with Google"
+                                    btnType="google"
+                                    color="#de4d41"
+                                    backgroundColor="#f5e7ea"
+                                    onPress={this.handleSignInWithGoogle}
+                                />
+                                <SocialButton
+                                    buttonTitle="Sign In Annonymous"
+                                    btnType="user"
+                                    color="#1e4d41"
+                                    backgroundColor="#d5e7ea"
+                                    //onPress={ () => {Alert.alert("Annonymous") }}
+                                    onPress={this.handleSignAnonymousGoogle}
+                                //onPress={}
+                                />
                             </View>
                         </View>
-                        <View style={styles.form}>
-                            <View style={styles.usernameColumn}>
-                                <View style={styles.username}>
-                                    <EvilIconsIcon
-                                        name="user"
-                                        style={styles.icon22}
-                                    ></EvilIconsIcon>
-                                    <TextInput
-                                        placeholder="Username"
-                                        placeholderTextColor="rgba(255,255,255,1)"
-                                        secureTextEntry={false}
-                                        style={styles.usernameInput}
-                                        onChangeText={ema => this.setState({email: ema})}
-                                    ></TextInput>
-                                </View>
-                                <View style={styles.password}>
-                                    <EvilIconsIcon
-                                        name="lock"
-                                        style={styles.icon2}
-                                    ></EvilIconsIcon>
-                                    <TextInput
-                                        placeholder="Password"
-                                        placeholderTextColor="rgba(255,255,255,1)"
-                                        secureTextEntry={false}
-                                        style={styles.passwordInput}
-                                    ></TextInput>
-                                </View>
-                            </View>
-                            <View style={styles.usernameColumnFiller}></View>
+                        <View style={styles.logoColumnFiller}></View>
+                        <View style={styles.footerTexts}>
                             <TouchableOpacity
-                                onPress={() => props.navigation.navigate("Channels")}
-                                style={styles.button}
+                                onPress={() => props.navigation.navigate("Register")}
+                                style={styles.button2}
                             >
-                                <Text style={styles.text2}>Ingresar</Text>
+                                <View style={styles.createAccountFiller}></View>
+                                <Text style={styles.createAccount}>Crear Cuenta</Text>
                             </TouchableOpacity>
-                            <SocialButton
-                                buttonTitle="Sign In with Google"
-                                btnType="google"
-                                color="#de4d41"
-                                backgroundColor="#f5e7ea"
-                                onPress={handleSignInWithGoogle}
-                            />
-                            <SocialButton
-                                buttonTitle="Sign In Annonymous"
-                                btnType="user"
-                                color="#1e4d41"
-                                backgroundColor="#d5e7ea"
-                                //onPress={ () => {Alert.alert("Annonymous") }}
-                                onPress={handleSignAnonymousGoogle}
-                            //onPress={}
-                            />
+                            <View style={styles.button2Filler}></View>
+                            <Text style={styles.needHelp}>Necesita ayuda?</Text>
                         </View>
-                    </View>
-                    <View style={styles.logoColumnFiller}></View>
-                    <View style={styles.footerTexts}>
-                        <TouchableOpacity
-                            onPress={() => props.navigation.navigate("Register")}
-                            style={styles.button2}
-                        >
-                            <View style={styles.createAccountFiller}></View>
-                            <Text style={styles.createAccount}>Crear Cuenta</Text>
-                        </TouchableOpacity>
-                        <View style={styles.button2Filler}></View>
-                        <Text style={styles.needHelp}>Necesita ayuda?</Text>
-                    </View>
-                </ImageBackground>
+                    </ImageBackground>
+                </View>
             </View>
-        </View>
-    );
+        )
+    }
 }
+
+
+    const mapDispatchToProps = dispatch => ({
+        setUser: (data) =>
+            dispatch(actions.user.setUser(data)),
+    })
+    const mapStateToProps = state => ({
+        user: state.user.user
+    })
+
+    export default connect(mapStateToProps, mapDispatchToProps)((Login))
 
 const styles = StyleSheet.create({
     root: {
@@ -343,4 +369,3 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Login;

@@ -1,13 +1,5 @@
-// auth action types
-export const LOGIN_USER = "LOGIN";
-export const LOGOUT_USER = "LOGOUT";
-
-// map action types
-export const SET_NEW_RELEASES = "SET_MAP";
-
-// profile action types
-export const SET_ARTISTS = "SET_PROFILE";
-
-// posts action types
-export const SET_CATEGORIES = "SET_POST_CREATE";
-export const SET_CATEGORY = "SET_POST_EDIT";
+export const LOG_IN = "LOG_IN";
+export const DEL_POSTS = "DEL_POSTS";
+export const UPDATE_POSTS = "UPDATE_POSTS";
+export const FETCH_POSTS = "FETCH_POSTS";
+export const POST_POSTS = "POST_POSTS";
