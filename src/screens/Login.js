@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import LoginForm from '../components/LoginForm';
 import LinearGradient from 'react-native-linear-gradient';
+import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
